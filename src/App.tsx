@@ -1,47 +1,42 @@
-import Header from './components/Header'
-import WelcomeBanner from './components/WelcomeBanner'
-import PostCard from './components/PostCard'
-import Footer from './components/Footer'
+import { useEffect, useState } from 'react';
+import { fetchPosts } from './services/post-service';
+import PostCard from './components/PostCard';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import type { Post } from './types';
 
-function App() {
-  const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  const appTitle = import.meta.env.VITE_APP_TITLE;
-  const version = import.meta.env.VITE_APP_VERSION;
-  const isDev = import.meta.env.DEV; 
-  const isProd = import.meta.env.PROD; 
-  const mode = import.meta.env.MODE; 
+export default function App() {
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    fetchPosts()
+      .then(data => {
+        setPosts(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Lỗi tải dữ liệu:', err);
+        setLoading(false);
+      });
+  }, []);
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>{appTitle} — v{version}</h1>
-      <hr />
-      <h2>Thông tin môi trường</h2>
-      <table border={1} cellPadding={8}>
-        <tbody>
-          <tr><td>API URL</td><td><code>{apiUrl}</code></td></tr>
-          <tr><td>Chế độ</td><td><code>{mode}</code></td></tr>
-          <tr><td>Đang phát triển?</td><td>{isDev ? '✓ Có' : '✗ Không'}</td></tr>
-          <tr><td>Đang production?</td><td>{isProd ? '✓ Có' : '✗ Không'}</td></tr>
-        </tbody>
-      </table>
-      <hr />
-      <h2>Kiểm tra bảo mật</h2>
-      <p>
-        DATABASE_URL (không có VITE_): {' '}
-        <code>{String(import.meta.env.DATABASE_URL)}</code>
-      </p>
-      <p style={{ color: 'green' }}>
-        Nếu thấy 'undefined' ở trên → Vite đã bảo vệ biến bí mật đúng cách ✓
-      </p>
-
+    <div style={{ fontFamily: 'sans-serif', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header />
-      <main>
-        <WelcomeBanner />
-        <PostCard />
+      
+      <main style={{ flex: 1, maxWidth: '800px', width: '100%', margin: '0 auto', padding: '2rem' }}>
+        <h2>Danh sách bài viết</h2>
+        <hr style={{ margin: '1rem 0' }} />
+
+        {loading ? (
+          <p>Đang tải dữ liệu từ API...</p>
+        ) : (
+          posts.map(post => <PostCard key={post.id} post={post} />)
+        )}
       </main>
+
       <Footer />
     </div>
-  )
+  );
 }
-
-export default App
