@@ -1,11 +1,18 @@
+import Header from './components/Header'
+import WelcomeBanner from './components/WelcomeBanner'
+import PostCard from './components/PostCard'
+import Footer from './components/Footer'
+
 function App() {
   return (
-    <div>
-      <h1>phu-xuan-react</h1>
-      <p>Dự án xuyên suốt học phần Web FrontEnd nâng cao</p>
-      <p>Trường Đại học Phú Xuân — Khoa Công nghệ thông tin</p>
-      <p>Sinh viên: [Phan Duyên Anh]</p>
-    </div>
+    <>
+      <Header />
+      <main>
+        <WelcomeBanner />
+        <PostCard />
+      </main>
+      <Footer />
+    </>
   )
 }
 
