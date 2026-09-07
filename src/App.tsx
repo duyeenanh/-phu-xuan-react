@@ -1,10 +1,17 @@
+// App.tsx – thành phần gốc, tập hợp các thành phần con
+
+// Nhập thành phần Header vừa tạo
+import Header from './components/Header'
+
 function App() {
   return (
     <div>
-      <h1>phu-xuan-react</h1>
-      <p>Dự án xuyên suốt học phần Web FrontEnd nâng cao</p>
-      <p>Trường Đại học Phú Xuân — Khoa Công nghệ thông tin</p>
-      <p>Sinh viên: [Phan Duyên Anh]</p>
+      {/* Dùng Header như một thẻ HTML – đây là cú pháp JSX gọi thành phần */}
+      <Header />
+
+      <main>
+        <p>Đây là nội dung chính của ứng dụng.</p>
+      </main>
     </div>
   )
 }
