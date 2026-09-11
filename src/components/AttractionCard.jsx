@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import StarRating from './StarRating';
+import TicketCounter from './TicketCounter';
 
 function AttractionCard({ name, category, description, rating }) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -20,6 +21,7 @@ function AttractionCard({ name, category, description, rating }) {
       <h3>{name}</h3>
       <p>{description}</p>
       <StarRating />
+      {name === 'Đại Nội Huế' && <TicketCounter price={150000} />}
       <span className="attraction-card__rating">⭐ {rating}</span>
     </div>
   );
