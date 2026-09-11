@@ -1,23 +1,31 @@
-import DiaDiem1 from "./components/DiaDiem1";
-import DiaDiem2 from "./components/DiaDiem2";
-import DiaDiem3 from "./components/DiaDiem3";
-import { NhanTrangThai, demTongSoDiaDiem } from "./components/TienIch";
+import { useState } from "react";
+import { menuItems } from "./data/menu";
+import MenuList from "./components/MenuList";
 
 export default function App() {
-  const danhSachTen = ["Đại Nội Huế", "Chợ Đông Ba", "Cầu Tràng Tiền"];
-  const gioHienTaiLa8Gio = true;
+  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
+
+  // Câu 6: Nâng State lên App và xử lý callback
+  const handleToggleFavorite = (id: number) => {
+    if (favoriteIds.includes(id)) {
+      setFavoriteIds(favoriteIds.filter((favId) => favId !== id));
+    } else {
+      setFavoriteIds([...favoriteIds, id]);
+    }
+  };
 
   return (
-    <div className="trang-chu" style={{ padding: "20px", fontFamily: "sans-serif" }}>
-      <h1>Danh sách địa điểm — phu-xuan-react</h1>
+    <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
+      <h1>Thực đơn Ẩm thực Huế</h1>
       <p>
-        Tổng số địa điểm: {demTongSoDiaDiem(danhSachTen)}
-        {" "}— <NhanTrangThai dangMoCua={gioHienTaiLa8Gio} />
+        <strong>Số món đã yêu thích: {favoriteIds.length}/{menuItems.length}</strong>
       </p>
-
-      <DiaDiem1 />
-      <DiaDiem2 />
-      <DiaDiem3 />
+      
+      <MenuList 
+        items={menuItems} 
+        favoriteIds={favoriteIds} 
+        onToggleFavorite={handleToggleFavorite} 
+      />
     </div>
   );
 }
