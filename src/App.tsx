@@ -1,31 +1,13 @@
-import { useState } from "react";
-import { menuItems } from "./data/menu";
-import MenuList from "./components/MenuList";
+import AttractionList from './components/AttractionList';
+import { attractions } from './data/attractions';
 
-export default function App() {
-  const [favoriteIds, setFavoriteIds] = useState<number[]>([]);
-
-  // Câu 6: Nâng State lên App và xử lý callback
-  const handleToggleFavorite = (id: number) => {
-    if (favoriteIds.includes(id)) {
-      setFavoriteIds(favoriteIds.filter((favId) => favId !== id));
-    } else {
-      setFavoriteIds([...favoriteIds, id]);
-    }
-  };
-
+function App() {
   return (
-    <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
-      <h1>Thực đơn Ẩm thực Huế</h1>
-      <p>
-        <strong>Số món đã yêu thích: {favoriteIds.length}/{menuItems.length}</strong>
-      </p>
-      
-      <MenuList 
-        items={menuItems} 
-        favoriteIds={favoriteIds} 
-        onToggleFavorite={handleToggleFavorite} 
-      />
+    <div className="app">
+      <h1>Khám phá Huế</h1>
+      <AttractionList attractions={attractions} />
     </div>
   );
 }
+
+export default App;
