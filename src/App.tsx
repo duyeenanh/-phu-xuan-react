@@ -1,21 +1,24 @@
 export default function App() {
+  const hoTen = "Lê Thị Hồng";
+  const maSinhVien = "22CNTT045";
+  const diemChuyenCan = 9;
+  const diemBaiTap = 8;
+  const diemKiemTra = 7.5;
+  const daNopBaiTapVeNha = false; // Thử đổi thành true để xem sự khác biệt
+
   return (
-    // 1. Dùng Fragment (<>...</>) để bọc nhiều phần tử gốc song song (Tránh lỗi #1)
-    <>
-      {/* 4. Dùng style dạng object JavaScript chuẩn camelCase (Tránh lỗi #4) */}
-      <h1 style={{ color: "teal", fontSize: "28px" }}>
-        Phòng thí nghiệm JSX — phu-xuan-react
-      </h1>
-
-      <p>Buổi 4: Giới thiệu JSX</p>
-
-      {/* 2. Thẻ img phải tự đóng bằng dấu /> (Tránh lỗi #2) */}
-      {/* 3. Dùng className thay vì class (Tránh lỗi #3) */}
-      <img 
-        src="https://placeholder.co/80x80" 
-        className="avatar" 
-        alt="Avatar" 
-      />
-    </>
+    <div className="student-card" style={{ padding: "20px", fontFamily: "sans-serif" }}>
+      <h2>{hoTen}</h2>
+      <p>Mã số sinh viên: {maSinhVien}</p>
+      <p>
+        Điểm quá trình:{" "}
+        {diemChuyenCan * 0.2 + diemBaiTap * 0.4 + diemKiemTra * 0.4}
+      </p>
+      <p style={{ color: daNopBaiTapVeNha ? "green" : "crimson" }}>
+        {daNopBaiTapVeNha
+          ? "Đã nộp bài tập về nhà Buổi 3."
+          : "Chưa nộp bài tập về nhà Buổi 3 — cần nộp trước Buổi 4!"}
+      </p>
+    </div>
   );
 }
