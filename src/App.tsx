@@ -1,7 +1,7 @@
-import TrangMonAn from './features/food/TrangMonAn';
+import TimMonAn from './features/food/TimMonAn';
 
 function App() {
-  return <TrangMonAn />;
+  return <TimMonAn />;
 }
 
 export default App;
