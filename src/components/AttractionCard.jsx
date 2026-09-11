@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import StarRating from './StarRating';
 
 function AttractionCard({ name, category, description, rating }) {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -18,6 +19,7 @@ function AttractionCard({ name, category, description, rating }) {
       <div className="attraction-card__badge">{category}</div>
       <h3>{name}</h3>
       <p>{description}</p>
+      <StarRating />
       <span className="attraction-card__rating">⭐ {rating}</span>
     </div>
   );
