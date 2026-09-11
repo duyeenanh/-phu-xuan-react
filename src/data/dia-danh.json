@@ -1,0 +1,10 @@
+[
+  { "id": 1, "ten": "Đại Nội Huế", "khuVuc": "Trong thành nội" },
+  { "id": 2, "ten": "Chợ Đông Ba", "khuVuc": "Trung tâm thành phố" },
+  { "id": 3, "ten": "Cầu Tràng Tiền", "khuVuc": "Trung tâm thành phố" },
+  { "id": 4, "ten": "Lăng Khải Định", "khuVuc": "Vùng ven" },
+  { "id": 5, "ten": "Lăng Tự Đức", "khuVuc": "Vùng ven" },
+  { "id": 6, "ten": "Chùa Thiên Mụ", "khuVuc": "Kim Long" },
+  { "id": 7, "ten": "Sông Hương", "khuVuc": "Thành phố Huế" },
+  { "id": 8, "ten": "Cầu Ngói Thanh Toàn", "khuVuc": "Thị xã Hương Thủy" }
+]

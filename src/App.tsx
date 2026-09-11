@@ -1,7 +1,7 @@
-import TimMonAn from './features/food/TimMonAn';
+import DanhSachDiaDanh from './features/landmarks/DanhSachDiaDanh';
 
 function App() {
-  return <TimMonAn />;
+  return <DanhSachDiaDanh />;
 }
 
 export default App;
