@@ -1,7 +1,7 @@
-import DanhSachDiaDanh from './features/landmarks/DanhSachDiaDanh';
+import TimKiemMonAnDebounce from './features/food/TimKiemMonAnDebounce';
 
 function App() {
-  return <DanhSachDiaDanh />;
+  return <TimKiemMonAnDebounce />;
 }
 
 export default App;
