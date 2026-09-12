@@ -7,31 +7,36 @@ export default function KhamPhaDiaDanh() {
   const [dsYeuThich, setDsYeuThich] = useState([]);
   const [soTuongTac, setSoTuongTac] = useState(0);
 
+  // Bấm vào thẻ: nếu đang mở thì đóng lại, ngược lại thì mở ra
   function handleXem(id) {
     setIdDangMo((truoc) => (truoc === id ? null : id));
   }
 
   function handleYeuThich(id) {
-    setDsYeuThich((truoc) =>
-      truoc.includes(id) ? truoc.filter((x) => x !== id) : [...truoc, id]
+    setDsYeuThich((truoc) => 
+      truoc.includes(id) 
+        ? truoc.filter((x) => x !== id) 
+        : [...truoc, id]
     );
   }
 
   return (
+    // Sử dụng onClickCapture: đếm MỌI cú bấm trong khu vực, kể cả khi thẻ con đã stopPropagation
     <section className="lab" onClickCapture={() => setSoTuongTac((t) => t + 1)}>
       <h2>Lab 3 — Khám phá địa danh</h2>
       <p className="thong-ke">
         Số lượt tương tác: {soTuongTac} · Yêu thích: {dsYeuThich.length}
       </p>
+
       <div className="luoi-the">
         {DS_DIA_DANH.map((dd) => (
-          <TheDiaDanhMoRong
-            key={dd.id}
-            diaDanh={dd}
-            dangMo={dd.id === idDangMo}
-            laYeuThich={dsYeuThich.includes(dd.id)}
-            onXem={handleXem}
-            onYeuThich={handleYeuThich}
+          <TheDiaDanhMoRong 
+            key={dd.id} 
+            diaDanh={dd} 
+            dangMo={dd.id === idDangMo} 
+            laYeuThich={dsYeuThich.includes(dd.id)} 
+            onXem={handleXem} 
+            onYeuThich={handleYeuThich} 
           />
         ))}
       </div>
