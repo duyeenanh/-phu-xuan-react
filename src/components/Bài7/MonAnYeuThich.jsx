@@ -1,106 +1,101 @@
 import { useState } from 'react';
 import { DS_MON_AN } from '../../data/monAnHue';
 
-// Hàm thuần: trả về MẢNG MỚI với phần tử chuyển từ vị trí tu sang den
-function diChuyen(mang, tu, den) {
-  const moi = [...mang];
-  const [phanTu] = moi.splice(tu, 1);
-  moi.splice(den, 0, phanTu);
-  return moi;
-}
-
 export default function MonAnYeuThich() {
-  const [dsMon, setDsMon] = useState(DS_MON_AN.slice(0, 5));
-  const [idDangKeo, setIdDangKeo] = useState(null);
-  const [idViTriTha, setIdViTriTha] = useState(null);
+  const [danhSach, setDanhSach] = useState(DS_MON_AN.slice(0, 5));
+  const [viTriDangKeo, setViTriDangKeo] = useState(null);
+  const [viTriTha, setViTriTha] = useState(null);
   const [thongBao, setThongBao] = useState('');
 
-  function baoViTri(ds, id) {
-    const viTri = ds.findIndex((m) => m.id === id);
-    setThongBao('Đã chuyển ' + ds[viTri].ten + ' đến vị trí ' + (viTri + 1));
-  }
-
-  function handleDragStart(e, id) {
-    setIdDangKeo(id);
+  // 1. Kéo thả bằng chuột
+  function handleDragStart(e, index) {
+    setViTriDangKeo(index);
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', id); // cần cho Firefox
   }
 
-  function handleDragOver(e, id) {
-    e.preventDefault(); // cho phép thả
-    if (id !== idViTriTha) setIdViTriTha(id);
-  }
-
-  function handleDrop(e, idDich) {
+  function handleDragOver(e, index) {
     e.preventDefault();
-    if (idDangKeo === null || idDangKeo === idDich) return;
-    const tu = dsMon.findIndex((m) => m.id === idDangKeo);
-    const den = dsMon.findIndex((m) => m.id === idDich);
-    const moi = diChuyen(dsMon, tu, den);
-    setDsMon(moi);
-    baoViTri(moi, idDangKeo);
+    if (viTriDangKeo === null || viTriDangKeo === index) return;
+    setViTriTha(index);
+  }
+
+  function handleDrop(index) {
+    if (viTriDangKeo === null || viTriDangKeo === index) return;
+    
+    setDanhSach((truoc) => {
+      const banSao = [...truoc];
+      const [itemDuocKeo] = banSao.splice(viTriDangKeo, 1);
+      banSao.splice(index, 0, itemDuocKeo);
+      return banSao;
+    });
+
+    const tenItem = danhSach[viTriDangKeo].ten;
+    setThongBao(`Đã chuyển ${tenItem} đến vị trí ${index + 1}`);
+    setViTriDangKeo(null);
+    setViTriTha(null);
   }
 
   function handleDragEnd() {
-    setIdDangKeo(null);
-    setIdViTriTha(null);
+    setViTriDangKeo(null);
+    setViTriTha(null);
   }
 
-  function handleKeyDown(e, viTri) {
-    if (!e.altKey) return;
-    const buoc = e.key === 'ArrowUp' ? -1 : e.key === 'ArrowDown' ? 1 : 0;
-    if (buoc === 0) return;
-    e.preventDefault(); // không cuộn trang
-    const den = viTri + buoc;
-    if (den < 0 || den >= dsMon.length) return;
-    const moi = diChuyen(dsMon, viTri, den);
-    setDsMon(moi);
-    baoViTri(moi, dsMon[viTri].id);
-  }
-
-  function handleXoa(id) {
-    const mon = dsMon.find((m) => m.id === id);
-    setDsMon((truoc) => truoc.filter((m) => m.id !== id));
-    setThongBao('Đã xoá ' + mon.ten + ' khỏi danh sách');
+  // 2. Hỗ trợ bàn phím (Alt + Mũi tên lên / xuống)
+  function handleKeyDown(e, index) {
+    if (e.altKey && e.key === 'ArrowUp' && index > 0) {
+      e.preventDefault();
+      setDanhSach((truoc) => {
+        const banSao = [...truoc];
+        const [item] = banSao.splice(index, 1);
+        banSao.splice(index - 1, 0, item);
+        return banSao;
+      });
+      setThongBao(`Đã di chuyển ${danhSach[index].ten} lên trên`);
+    } else if (e.altKey && e.key === 'ArrowDown' && index < danhSach.length - 1) {
+      e.preventDefault();
+      setDanhSach((truoc) => {
+        const banSao = [...truoc];
+        const [item] = banSao.splice(index, 1);
+        banSao.splice(index + 1, 0, item);
+        return banSao;
+      });
+      setThongBao(`Đã di chuyển ${danhSach[index].ten} xuống dưới`);
+    }
   }
 
   return (
     <section className="lab">
-      <h2>Lab 5 — Món Huế yêu thích của tôi</h2>
-      <p className="goi-y-thao-tac">
-        Kéo thả để sắp xếp, hoặc chọn một món rồi nhấn Alt + mũi tên lên/xuống.
+      <h2>Lab 5 — Sắp xếp món yêu thích (Kéo thả & Bàn phím)</h2>
+      <p className="huong-dan">
+        Kéo thả từng dòng để đổi vị trí, hoặc dùng phím <strong>Tab</strong> vào dòng rồi nhấn <strong>Alt + Mũi tên lên/xuống</strong>.
       </p>
 
-      <ol className="ds-mon-yeu-thich">
-        {dsMon.map((mon, viTri) => (
+      <ul className="ds-mon-yeu-thich">
+        {danhSach.map((mon, index) => (
           <li
             key={mon.id}
             draggable
             tabIndex={0}
-            onDragStart={(e) => handleDragStart(e, mon.id)}
-            onDragOver={(e) => handleDragOver(e, mon.id)}
-            onDrop={(e) => handleDrop(e, mon.id)}
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragOver={(e) => handleDragOver(e, index)}
+            onDrop={() => handleDrop(index)}
             onDragEnd={handleDragEnd}
-            onKeyDown={(e) => handleKeyDown(e, viTri)}
-            className={
-              (mon.id === idDangKeo ? 'dang-keo ' : '') +
-              (mon.id === idViTriTha && mon.id !== idDangKeo ? 'vi-tri-tha' : '')
-            }
+            onKeyDown={(e) => handleKeyDown(e, index)}
+            className={`
+              ${viTriDangKeo === index ? 'dang-keo' : ''}
+              ${viTriTha === index ? 'vi-tri-tha' : ''}
+            `}
           >
-            <span>{mon.ten}</span>
-            <button
-              aria-label={'Xoá ' + mon.ten}
-              onClick={() => handleXoa(mon.id)}
-              onKeyDown={(e) => e.stopPropagation()}
-            >
-              Xoá
-            </button>
+            <span>{index + 1}. {mon.ten}</span>
+            <span className="gia">{mon.gia.toLocaleString('vi-VN')} đ</span>
           </li>
         ))}
-      </ol>
+      </ul>
 
-      {/* Vùng thông báo cho trình đọc màn hình */}
-      <p className="thong-bao" aria-live="polite">{thongBao}</p>
+      {/* Vùng thông báo ẩn cho trình đọc màn hình / người dùng */}
+      <div className="thong-bao" aria-live="polite">
+        {thongBao}
+      </div>
     </section>
   );
 }
