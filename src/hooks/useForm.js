@@ -1,5 +1,20 @@
 import { useState } from 'react';
 
+/**
+ * @template T
+ * @param {T} initialValues
+ * @param {(values: T) => Record<string, string>} [validate]
+ * @returns {{
+ *   values: T,
+ *   errors: Record<string, string>,
+ *   touched: Record<string, boolean>,
+ *   status: string,
+ *   setStatus: (value: string) => void,
+ *   handleChange: (e: any) => void,
+ *   handleBlur: (e: any) => void,
+ *   handleSubmit: (callback?: (values: T) => void) => (e: any) => void
+ * }}
+ */
 export function useForm(initialValues, validate) {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState({});

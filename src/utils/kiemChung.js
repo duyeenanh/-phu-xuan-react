@@ -1,3 +1,7 @@
+/**
+ * @param {{ tenDiaDanh?: string, moTa?: string }} values
+ * @returns {Record<string, string>}
+ */
 export function kiemChungForm(values) {
   let errors = {};
 
