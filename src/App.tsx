@@ -1,17 +1,16 @@
-import { useState } from 'react';
-import LuotXemDaiNoi from './features/landmarks/LuotXemDaiNoi';
+import TrangThemDiaDiem from './components/Bài8/TrangThemDiaDiem';
 
-function App() {
-  const [hienThi, setHienThi] = useState(true);
-
+export default function App() {
   return (
-    <div>
-      <button onClick={() => setHienThi(!hienThi)}>
-        {hienThi ? 'Ẩn thẻ Đại Nội' : 'Hiện thẻ Đại Nội'}
-      </button>
-      {hienThi && <LuotXemDaiNoi />}
+    <div className="App">
+      <header style={{ textAlign: 'center', padding: '15px', background: '#8b0000', color: 'white' }}>
+        <h1>Cố Đô Huế — Ứng Dụng Quản Lý Du Lịch</h1>
+      </header>
+
+      <main style={{ padding: '20px' }}>
+        {/* Gọi trang cha chứa toàn bộ Lab 5 (Lifting State Up & Preview) */}
+        <TrangThemDiaDiem />
+      </main>
     </div>
   );
 }
-
-export default App;
