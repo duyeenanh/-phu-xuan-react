@@ -1,7 +1,17 @@
-import Bài7Page from './pages/Bài7Page';
+import ThemDiaDanhForm from './components/Bài8/ThemDiaDanhForm';
 
 export default function App() {
-  // Các trang demo của Bài 5, Bài 6 vẫn giữ nguyên trong thư mục src/pages
-  // Bài này tạm thời chỉ hiển thị trang Bài 7 cho gọn
-  return <Bài7Page />;
+  return (
+    <div className="App">
+      <header style={{ textAlign: 'center', padding: '20px', background: '#8b0000', color: 'white' }}>
+        <h1>Cố Đô Huế — Quản Lý & Trải Nghiệm Du Lịch</h1>
+        <p>Ứng dụng Frontend kết hợp Form có kiểm soát (Bài 8)</p>
+      </header>
+
+      <main style={{ padding: '20px' }}>
+        {/* Hiển thị form Lab 1 & 2 vừa xây dựng */}
+        <ThemDiaDanhForm />
+      </main>
+    </div>
+  );
 }
