@@ -1,49 +1,39 @@
 // src/App.jsx
+import { useState } from "react";
 import BoCucTrang from "./components/BoCucTrang";
-import DanhSach from "./components/DanhSach";
+import The from "./components/The";
 import TheDiaDanh from "./components/TheDiaDanh";
+import TheDiaDanhForm from "./components/TheDiaDanhForm";
 import { DANH_SACH_DIA_DANH } from "./du-lieu/diaDanh";
-import { DANH_SACH_MON_AN } from "./du-lieu/monAn";
 import "./App.css";
 
-type MonAn = (typeof DANH_SACH_MON_AN)[number];
-
 function App() {
+  const [danhSach, setDanhSach] = useState(DANH_SACH_DIA_DANH);
+
+  const handleThemDiaDanh = (diaDanhMoi) => {
+    setDanhSach([diaDanhMoi, ...danhSach]);
+  };
+
   return (
     <BoCucTrang
-      thanhDieuHuong="Du lịch Huế — phu-xuan-react"
+      thanhDieuHuong="Du lịch Huế — Lab 4 (State & Form)"
       chanTrang={<span>© 2026 Nhóm Sinh viên — INT.7.18 ĐH Phú Xuân</span>}
       noiDungChinh={
         <>
-          <h2>Địa danh nổi bật</h2>
-          <div className="luoi-dia-danh">
-            {DANH_SACH_DIA_DANH.map((dd) => (
-              <TheDiaDanh
-                key={dd.id}
-                anh={dd.anh}
-                ten={dd.ten}
-                moTa={dd.moTa}
-              />
-            ))}
-          </div>
+          <TheDiaDanhForm khiThem={handleThemDiaDanh} />
 
-          <h2 style={{ marginTop: "32px" }}>Ẩm thực (kiểu chữ đơn giản)</h2>
-          <DanhSach
-            cacMuc={DANH_SACH_MON_AN}
-            hienThiMuc={(mon: MonAn) => (
-              <strong>{mon.ten} — {mon.gia.toLocaleString()}đ</strong>
-            )}
-          />
-
-          <h2 style={{ marginTop: "24px" }}>Ẩm thực (kiểu có nút bấm)</h2>
-          <DanhSach
-            cacMuc={DANH_SACH_MON_AN}
-            hienThiMuc={(mon: MonAn) => (
-              <span>
-                {mon.ten} <button style={{ marginLeft: "10px" }}>Đặt món</button>
-              </span>
-            )}
-          />
+          <The tieuDe={`Danh sách Địa danh nổi bật (${danhSach.length})`}>
+            <div className="luoi-dia-danh">
+              {danhSach.map((dd) => (
+                <TheDiaDanh
+                  key={dd.id}
+                  anh={dd.anh}
+                  ten={dd.ten}
+                  moTa={dd.moTa}
+                />
+              ))}
+            </div>
+          </The>
         </>
       }
     />
