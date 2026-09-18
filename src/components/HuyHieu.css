@@ -1,0 +1,20 @@
+/* src/components/HuyHieu.css */
+.huy-hieu {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 12px;
+  color: #fff;
+  margin-right: 8px;
+  text-transform: uppercase;
+}
+.huy-hieu--do {
+  background-color: #e53e3e;
+}
+.huy-hieu--xanh {
+  background-color: #3182ce;
+}
+.huy-hieu--vang {
+  background-color: #d69e2e;
+}
