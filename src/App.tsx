@@ -1,17 +1,7 @@
-import { useState } from 'react';
-import LuotXemDaiNoi from './features/landmarks/LuotXemDaiNoi';
+import { TourListContainer } from './features/tours/TourListContainer';
 
-function App() {
-  const [hienThi, setHienThi] = useState(true);
-
-  return (
-    <div>
-      <button onClick={() => setHienThi(!hienThi)}>
-        {hienThi ? 'Ẩn thẻ Đại Nội' : 'Hiện thẻ Đại Nội'}
-      </button>
-      {hienThi && <LuotXemDaiNoi />}
-    </div>
-  );
+export function App() {
+  return <TourListContainer />;
 }
 
 export default App;
