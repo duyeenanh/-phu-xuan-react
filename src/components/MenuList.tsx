@@ -1,6 +1,18 @@
 import MenuItem from "./MenuItem";
 
-export default function MenuList({ items, favoriteIds, onToggleFavorite }) {
+type MenuListProps = {
+  items: {
+    id: number;
+    name: string;
+    price: number;
+    description: string;
+    isSpicy: boolean;
+  }[];
+  favoriteIds: number[];
+  onToggleFavorite: (id: number) => void;
+};
+
+export default function MenuList({ items, favoriteIds, onToggleFavorite }: MenuListProps) {
   return (
     <div>
       {items.map((item) => (

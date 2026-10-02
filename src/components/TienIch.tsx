@@ -1,5 +1,5 @@
 // Named export #1: component nhỏ hiển thị nhãn trạng thái
-export function NhanTrangThai({ dangMoCua }) {
+export function NhanTrangThai({ dangMoCua }: { dangMoCua: boolean }) {
   return (
     <span style={{ color: dangMoCua ? "green" : "crimson", fontWeight: "bold" }}>
       {dangMoCua ? "• Đang mở cửa" : "• Đã đóng cửa"}
@@ -7,7 +7,3 @@ export function NhanTrangThai({ dangMoCua }) {
   );
 }
 
-// Named export #2: hàm JavaScript thuần đếm số lượng địa điểm
-export function demTongSoDiaDiem(danhSach) {
-  return danhSach.length;
-}
