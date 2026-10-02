@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import LuotXemDaiNoi from './features/landmarks/LuotXemDaiNoi';
+import LuotXemDaiNoi from './features/landmarks/LuotXemDainoi';
 
 function App() {
   const [hienThi, setHienThi] = useState(true);

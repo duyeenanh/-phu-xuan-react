@@ -1,4 +1,4 @@
-import MenuItem from "./MenuItem.";
+import MenuItem from "./MenuItem";
 
 export default function MenuList({ items, favoriteIds, onToggleFavorite }) {
   return (
