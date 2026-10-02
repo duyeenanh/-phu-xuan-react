@@ -3,7 +3,6 @@ import useFetch from '../hooks/useFetch';
 import type { DiaDanh } from '../types/diaDanh';
 
 export default function AttractionList() {
-  // Sử dụng custom hook useFetch<T> đã tạo
   const { dangTai, duLieu, loi } = useFetch<DiaDanh[]>('/data/attractions.json');
 
   if (dangTai) {
@@ -19,7 +18,10 @@ export default function AttractionList() {
       {duLieu?.map((item) => (
         <AttractionCard
           key={item.id}
-          attraction={item}
+          name={item.ten}
+          category={item.loai}
+          description={item.moTa}
+          rating={4.5}
         />
       ))}
     </div>

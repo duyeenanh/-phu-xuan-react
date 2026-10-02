@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react';
+import { z } from 'zod';
 
-// 1. Định nghĩa Union phân biệt cho trạng thái Fetch
 export type TrangThaiFetch<T> =
   | { dangTai: true; duLieu: null; loi: null }
   | { dangTai: false; duLieu: T; loi: null }
   | { dangTai: false; duLieu: null; loi: string };
 
-// Hàm trợ giúp kiểm tra vét cạn (exhaustive check) bằng never
-function xuLyVetCan(x: never): never {
-  throw new Error(`Trạng thái không hợp lệ: ${JSON.stringify(x)}`);
-}
-
-// 2. Xây dựng Custom Hook generic useFetch<T>
-export default function useFetch<T>(duongDan: string): TrangThaiFetch<T> {
+// Nhận thêm schema Zod tùy chọn để validate dữ liệu
+export default function useFetch<T>(duongDan: string, schema?: z.ZodSchema<T>): TrangThaiFetch<T> {
   const [trangThai, setTrangThai] = useState<TrangThaiFetch<T>>({
     dangTai: true,
     duLieu: null,
@@ -29,13 +24,17 @@ export default function useFetch<T>(duongDan: string): TrangThaiFetch<T> {
         if (!phanHoi.ok) {
           throw new Error(`Lỗi máy chủ: ${phanHoi.status}`);
         }
-        const ketQua: T = await phanHoi.json();
+        const json = await phanHoi.json();
+
+        // Nếu có truyền schema Zod, tiến hành parse/validate dữ liệu
+        const ketQua: T = schema ? schema.parse(json) : json;
+
         if (!daHuy) {
           setTrangThai({ dangTai: false, duLieu: ketQua, loi: null });
         }
       } catch (e: unknown) {
         if (!daHuy) {
-          const thongBaoLoi = e instanceof Error ? e.message : 'Đã xảy ra lỗi không xác định';
+          const thongBaoLoi = e instanceof Error ? e.message : 'Đã xảy ra lỗi không xác định hoặc dữ liệu không hợp lệ';
           setTrangThai({ dangTai: false, duLieu: null, loi: thongBaoLoi });
         }
       }
@@ -46,7 +45,7 @@ export default function useFetch<T>(duongDan: string): TrangThaiFetch<T> {
     return () => {
       daHuy = true;
     };
-  }, [duongDan]);
+  }, [duongDan, schema]);
 
   return trangThai;
 }

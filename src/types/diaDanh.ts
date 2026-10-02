@@ -1,11 +1,14 @@
-// Lab 1: khai báo kiểu thủ công (sẽ thay bằng z.infer ở Lab 4)
-export type LoaiDiaDanh = 'Di tích' | 'Cảnh quan' | 'Ẩm thực';
+import { z } from 'zod';
 
-export interface DiaDanh {
-  id: number;
-  ten: string;
-  loai: LoaiDiaDanh;
-  giaVe: number; // đơn vị: đồng; 0 = miễn phí
-  anh: string;
-  moTa: string;
-}
+// Định nghĩa lược đồ Zod cho một Địa danh
+export const diaDanhSchema = z.object({
+  id: z.number(),
+  ten: z.string().min(1, 'Tên không được để trống'),
+  loai: z.enum(['Di tích', 'Cảnh quan', 'Ẩm thực']),
+  giaVe: z.number().nonnegative('Giá vé không được âm'),
+  anh: z.string().url('Ảnh phải là đường dẫn hợp lệ'),
+  moTa: z.string(),
+});
+
+// Tự động suy ra kiểu TypeScript từ lược đồ Zod
+export type DiaDanh = z.infer<typeof diaDanhSchema>;
