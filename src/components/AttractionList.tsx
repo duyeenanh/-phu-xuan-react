@@ -1,19 +1,27 @@
 import AttractionCard from './AttractionCard';
+import useFetch from '../hooks/useFetch';
+import type { DiaDanh } from '../types/diaDanh';
 
-function AttractionList({ attractions }) {
+export default function AttractionList() {
+  // Sử dụng custom hook useFetch<T> đã tạo
+  const { dangTai, duLieu, loi } = useFetch<DiaDanh[]>('/data/attractions.json');
+
+  if (dangTai) {
+    return <p>Đang tải danh sách địa danh...</p>;
+  }
+
+  if (loi) {
+    return <p style={{ color: 'red' }}>Lỗi: {loi}</p>;
+  }
+
   return (
     <div className="attraction-list">
-      {attractions.map((item) => (
+      {duLieu?.map((item) => (
         <AttractionCard
           key={item.id}
-          name={item.name}
-          category={item.category}
-          description={item.description}
-          rating={item.rating}
+          attraction={item}
         />
       ))}
     </div>
   );
 }
-
-export default AttractionList;
