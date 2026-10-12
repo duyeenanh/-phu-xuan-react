@@ -1,7 +1,11 @@
-import AttractionCard from './AttractionCard';
-import type { DiaDanh } from '../types/diaDanh';
+import AttractionCard from './AttractionCard.tsx';
+import type { DiaDanh } from '../types.ts';
 
-export default function AttractionList({ danhSachMoTa }: { danhSachMoTa: DiaDanh[] }) {
+interface AttractionListProps {
+  danhSachMoTa: DiaDanh[];
+}
+
+export default function AttractionList({ danhSachMoTa }: AttractionListProps) {
   return (
     <div className="attraction-list">
       {danhSachMoTa.map((item) => (

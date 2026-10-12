@@ -1,24 +1,16 @@
-export interface Post {
-  id: number;
-  title: string;
-  excerpt: string;
-  content: string;
-  authorId: number;
-  publishedAt: string;
-  tags: string[];
-}
+// src/types/index.ts
 
-export interface User {
+export type DiaDanh = {
   id: number;
+  ten: string;
+  loai?: "Di tích" | "Cảnh quan" | "Ẩm thực";
+  giaVe?: number;
+  moTa: string;
+  anh: string;
+};
+
+export type User = {
+  id: string;
   name: string;
   email: string;
-  avatarUrl?: string;
-}
-
-export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
-
-export interface ApiResponse<T> {
-  data: T;
-  message: string;
-  success: boolean;
-}
+};

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function StarRating() {
+export default function StarRating() {
   const [userRating, setUserRating] = useState(0);
   const stars = [1, 2, 3, 4, 5];
 
@@ -19,5 +19,3 @@ function StarRating() {
     </div>
   );
 }
-
-export default StarRating;

@@ -1,14 +1,18 @@
 import { useState } from 'react';
 
-function TicketCounter({ price }) {
+interface TicketCounterProps {
+  price: number;
+}
+
+export default function TicketCounter({ price }: TicketCounterProps) {
   const [quantity, setQuantity] = useState(1);
 
   function handleDecrease() {
-    setQuantity((prev) => Math.max(1, prev - 1));
+    setQuantity((previousValue) => Math.max(1, previousValue - 1));
   }
 
   function handleIncrease() {
-    setQuantity((prev) => Math.min(10, prev + 1));
+    setQuantity((previousValue) => Math.min(10, previousValue + 1));
   }
 
   const totalPrice = price * quantity;
@@ -22,5 +26,3 @@ function TicketCounter({ price }) {
     </div>
   );
 }
-
-export default TicketCounter;

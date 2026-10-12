@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-// Định nghĩa lược đồ Zod cho một Địa danh
 export const diaDanhSchema = z.object({
   id: z.number(),
   ten: z.string().min(1, 'Tên không được để trống'),
@@ -10,5 +9,9 @@ export const diaDanhSchema = z.object({
   moTa: z.string(),
 });
 
-// Tự động suy ra kiểu TypeScript từ lược đồ Zod
 export type DiaDanh = z.infer<typeof diaDanhSchema>;
+
+export interface AttractionsStore {
+  attractions: DiaDanh[];
+  addAttraction: (attraction: DiaDanh) => void;
+}
