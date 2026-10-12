@@ -1,4 +1,4 @@
-export function formatDate(date) {
+export function formatDate(date: Date): string {
   return date.toLocaleDateString('vi-VN', {
     year: 'numeric',
     month: '2-digit',
@@ -6,12 +6,12 @@ export function formatDate(date) {
   });
 }
 
-export function truncate(str, maxLength = 50) {
+export function truncate(str: string, maxLength = 50): string {
   if (str.length <= maxLength) return str;
   return str.slice(0, maxLength - 3) + '...';
 }
 
-export function toSlug(title) {
+export function toSlug(title: string): string {
   return title
     .toLowerCase()
     .replace(/\s+/g, '-')

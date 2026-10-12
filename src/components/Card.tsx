@@ -19,7 +19,14 @@ export const Card: React.FC<CardProps> = ({
         <img
           src={imageUrl}
           alt={title}
-          className="w-full h-48 object-cover"
+          loading="lazy"
+          style={{
+            display: "block",
+            width: "100%",
+            height: "12rem",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
         />
       )}
       <div className="p-4">
