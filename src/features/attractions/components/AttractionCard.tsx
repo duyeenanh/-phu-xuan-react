@@ -1,12 +1,25 @@
 import { useState } from 'react';
-import StarRating from './StarRating';
-import TicketCounter from './TicketCounter';
+import StarRating from './StarRating.tsx';
+import TicketCounter from './TicketCounter.tsx';
+import type { DiaDanh } from '../types.ts';
 
-function AttractionCard({ name, category, description, rating }) {
+interface AttractionCardProps {
+  name: string;
+  category: DiaDanh['loai'];
+  description: string;
+  rating: number;
+}
+
+export default function AttractionCard({
+  name,
+  category,
+  description,
+  rating,
+}: AttractionCardProps) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   function handleToggleFavorite() {
-    setIsFavorite((prev) => !prev);
+    setIsFavorite((previousValue) => !previousValue);
   }
 
   return (
@@ -26,5 +39,3 @@ function AttractionCard({ name, category, description, rating }) {
     </div>
   );
 }
-
-export default AttractionCard;

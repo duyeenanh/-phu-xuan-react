@@ -1,17 +1,19 @@
-export function formatDate(date: string | Date): string {
-  return new Date(date).toLocaleDateString('vi-VN');
-}
+// src/utils/string-utils.ts
 
-export function truncate(str: string, maxLength: number = 50): string {
-  if (str.length <= maxLength) return str;
-  return str.slice(0, maxLength) + '...';
-}
+/**
+ * Viết hoa chữ cái đầu tiên của chuỗi
+ */
+export const hoaChuCaiDau = (str: string): string => {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
 
-export function toSlug(title: string): string {
-  return title
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^\w\s-]/g, '')
-    .replace(/\s+/g, '-');
-}
+/**
+ * Định dạng số tiền sang chuẩn Việt Nam Đồng (VND)
+ */
+export const dinhDangTien = (amount: number): string => {
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'currency',
+    currency: 'VND',
+  }).format(amount);
+};
